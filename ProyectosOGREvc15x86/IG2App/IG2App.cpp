@@ -4,8 +4,10 @@
 #include <OgreInput.h>
 #include <SDL_keycode.h>
 #include <OgreMeshManager.h>
+#include <string>
 
 using namespace Ogre;
+using namespace std;
 
 bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
@@ -13,7 +15,10 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
   {
     getRoot()->queueEndRendering();
   }
-  //else if (evt.keysym.sym == SDLK_???)
+  else if (evt.keysym.sym == SDLK_w) {
+	  rotateroll("clockNode");
+	  //rotateposition("clockNode");
+  }
   
   return true;
 }
@@ -91,21 +96,7 @@ void IG2App::setupScene(void)
 
   // finally something to render
 
-  Ogre::Entity* ent;
-  int ini = 90;
-  int incr = 360 / 12;
-  for (int i = 1; i <= 12; i++) {
-	mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode();
-	ent = mSM->createEntity("cube.mesh");
-	mSinbadNode->attachObject(ent);
-	mSinbadNode->setPosition(Ogre::Math::Cos(Ogre::Degree(ini+incr*i))*300, Ogre::Math::Sin(Ogre::Degree(ini + incr * i))*300, 0);
-  }
-
-  mSinbadNode->setScale(1, 1, 1);
-
-  //mSinbadNode->yaw(Ogre::Degree(-90));
-  //mSinbadNode->showBoundingBox(true);
-  //mSinbadNode->setVisible(false);
+  scene2();
 
   //------------------------------------------------------------------------
 
@@ -118,5 +109,64 @@ void IG2App::setupScene(void)
 
   //------------------------------------------------------------------------
 
+}
+
+void IG2App::rotateroll(string node) {
+	mSM->getSceneNode(node)->roll(Ogre::Degree(-1));
+	for (int i = 1; i <= 12; i++) {
+		mSM->getSceneNode("cubo_" + to_string(i))->roll(Ogre::Degree(1));
+	}
+}
+
+void IG2App::rotateposition(string node) {
+	int ini = 90;
+	int incr = 360 / 12;
+	for (int i = 1; i <= 12; i++) {
+		//mSM->getSceneNode("cubo_" + to_string(i))->setPosition(mSM->getSceneNode("cubo_" + to_string(i))->getPosition().x + 1, mSM->getSceneNode("cubo_" + to_string(i))->getPosition().y + 1, 0);
+		mSM->getSceneNode("cubo_" + to_string(i))->setPosition(Ogre::Math::Cos(Ogre::Degree(ini + incr * i - incrX)) * 300 , Ogre::Math::Sin(Ogre::Degree(ini + incr * i - incrX)) * 300, 0);
+	}
+	incrX++;
+}
+
+void IG2App::scene1() {
+	clockNode = mSM->getRootSceneNode()->createChildSceneNode("clockNode");
+	knotNode = mSM->getRootSceneNode()->createChildSceneNode("knotNode");
+
+	Ogre::Entity* ent;
+	Ogre::Entity* nudo;
+	int ini = 90;
+	int incr = 360 / 12;
+
+	for (int i = 1; i <= 12; i++) {
+		hourNode[i] = clockNode->createChildSceneNode("cubo_" + to_string(i));
+		ent = mSM->createEntity("cube.mesh");
+		hourNode[i]->attachObject(ent);
+		if (i % 2 == 0)
+			mSM->getSceneNode("cubo_" + to_string(i))->setScale(0.5, 0.5, 0.5);
+		hourNode[i]->setPosition(Ogre::Math::Cos(Ogre::Degree(ini + incr * i)) * 300, Ogre::Math::Sin(Ogre::Degree(ini + incr * i)) * 300, 0);
+	}
+	nudo = mSM->createEntity("knot.mesh");
+	knotNode->attachObject(nudo);
+	knotNode->setScale(1, 1, 1);
+	clockNode->setScale(1, 1, 1);
+
+	//clockNode->yaw(Ogre::Degree(-90));
+	clockNode->showBoundingBox(true);
+	knotNode->showBoundingBox(true);
+	//clockNode->setVisible(false);
+}
+void IG2App::scene2() {
+	clockNode = mSM->getRootSceneNode()->createChildSceneNode("clockNode");
+	Ogre::Entity* ent;
+	int ini = 90;
+	int incr = 360 / 12;
+	for (int i = 1; i <= 12; i++) {
+		hourNode[i] = clockNode->createChildSceneNode("cubo_" + to_string(i));
+		ent = mSM->createEntity("cube.mesh");
+		hourNode[i]->attachObject(ent);
+		hourNode[i]->setPosition(Ogre::Math::Cos(Ogre::Degree(ini + incr * i)) * 300, Ogre::Math::Sin(Ogre::Degree(ini + incr * i)) * 300, 0);
+	}
+	clockNode->setScale(1, 1, 1);
+	clockNode->showBoundingBox(true);
 }
 

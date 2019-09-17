@@ -7,6 +7,8 @@
 #include <OgreTrays.h>
 #include <OgreCameraMan.h>
 
+using namespace std;
+
 
 class IG2App : public  OgreBites::IG2ApplicationContext, OgreBites::InputListener 
 {
@@ -18,6 +20,12 @@ protected:
   virtual void setup();
   virtual void shutdown();
   virtual void setupScene();
+  void scene1();
+  void scene2();
+  void rotateroll(string node);
+  void rotateposition(string node);
+
+  int incrX = 0;
 
   virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);  // InputListener
       
@@ -25,7 +33,9 @@ protected:
   OgreBites::TrayManager* mTrayMgr = nullptr;    
   Ogre::SceneNode* mLightNode = nullptr;
   Ogre::SceneNode* mCamNode = nullptr;
-  Ogre::SceneNode* mSinbadNode = nullptr;
+  Ogre::SceneNode* clockNode = nullptr;
+  Ogre::SceneNode* knotNode = nullptr;
+  Ogre::SceneNode* hourNode[12];
   OgreBites::CameraMan* mCamMgr = nullptr;
  
 };
