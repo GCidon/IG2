@@ -22,8 +22,12 @@ protected:
   virtual void setupScene();
   void scene1();
   void scene2();
+  void scene3();
   void rotateroll(string node);
   void rotateposition(string node);
+  void rotatecabeza();
+  void avance();
+  void retroceso();
 
   int incrX = 0;
 
@@ -35,8 +39,14 @@ protected:
   Ogre::SceneNode* mCamNode = nullptr;
   Ogre::SceneNode* clockNode = nullptr;
   Ogre::SceneNode* knotNode = nullptr;
-  Ogre::SceneNode* hourNode[12];
+  Ogre::SceneNode* aspasNode[12];
   OgreBites::CameraMan* mCamMgr = nullptr;
+
+  Ogre::SceneNode* monhecoNode = nullptr;
+  Ogre::SceneNode* cabezaNode = nullptr;
+  Ogre::SceneNode* cuerpoNode = nullptr;
+  Ogre::SceneNode* narizNode = nullptr;
+  Ogre::SceneNode* ombligoNode = nullptr;
  
 };
 
