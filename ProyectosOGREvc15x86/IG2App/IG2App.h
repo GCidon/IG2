@@ -6,6 +6,8 @@
 #include <OgreSceneNode.h>
 #include <OgreTrays.h>
 #include <OgreCameraMan.h>
+#include "Aspa.h"
+#include "Noria.h"
 
 using namespace std;
 
@@ -23,6 +25,7 @@ protected:
   void scene1();
   void scene2();
   void scene3();
+  void scene4();
   void rotateroll(string node);
   void rotateposition(string node);
   void rotatecabeza();
@@ -47,6 +50,8 @@ protected:
   Ogre::SceneNode* cuerpoNode = nullptr;
   Ogre::SceneNode* narizNode = nullptr;
   Ogre::SceneNode* ombligoNode = nullptr;
+
+
  
 };
 

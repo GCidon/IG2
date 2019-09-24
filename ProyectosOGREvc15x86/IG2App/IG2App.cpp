@@ -103,7 +103,7 @@ void IG2App::setupScene(void)
 
   // finally something to render
 
-  scene3();
+  scene4();
 
   //------------------------------------------------------------------------
 
@@ -235,4 +235,11 @@ void IG2App::scene3() {
 	cuerpoNode->setPosition(0, 0, 0);
 	
 }
+
+void IG2App::scene4() {
+	narizNode = mSM->getRootSceneNode()->createChildSceneNode("noria");
+	Noria* noria = new Noria(narizNode);
+	addInputListener(noria);
+}
+
 
