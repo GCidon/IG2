@@ -8,6 +8,7 @@
 #include <OgreCameraMan.h>
 #include "Aspa.h"
 #include "Noria.h"
+#include "Monheco.h"
 
 using namespace std;
 
@@ -51,6 +52,10 @@ protected:
   Ogre::SceneNode* narizNode = nullptr;
   Ogre::SceneNode* ombligoNode = nullptr;
 
+  Ogre::SceneNode* noriaNode = nullptr;
+  Ogre::SceneNode* planoNode = nullptr;
+  Noria* noria;
+  Monheco* monheco;
 
  
 };

@@ -16,15 +16,16 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
     getRoot()->queueEndRendering();
   }
   else if (evt.keysym.sym == SDLK_w) {
-	  rotatecabeza();
+
+	  //rotatecabeza();
 	  //rotateroll("clockNode");
 	  //rotateposition("clockNode");
   }
   else if (evt.keysym.sym == SDLK_q) {
-	  avance();
+	  //avance();
   }
   else if (evt.keysym.sym == SDLK_e) {
-	  retroceso();
+	  //retroceso();
   }
   
   return true;
@@ -32,6 +33,9 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 
 void IG2App::shutdown()
 {
+	delete noria;
+	delete monheco;
+
   mShaderGenerator->removeSceneManager(mSM);  
   mSM->removeRenderQueueListener(mOverlaySystem);  
 					
@@ -90,7 +94,7 @@ void IG2App::setupScene(void)
 
   Light* luz = mSM->createLight("Luz");
   luz->setType(Ogre::Light::LT_DIRECTIONAL);
-  luz->setDiffuseColour(1, 1, 0);
+  luz->setDiffuseColour(1.0, 105.0/255.0, 180.0/255.0);
 
   mLightNode = mSM->getRootSceneNode()->createChildSceneNode("nLuz");
   //mLightNode = mCamNode->createChildSceneNode("nLuz");
@@ -115,6 +119,7 @@ void IG2App::setupScene(void)
   //mCamMgr->setYawPitchDist(Radian(0), Degree(30), 100);
 
   //------------------------------------------------------------------------
+
 
 }
 
@@ -237,9 +242,23 @@ void IG2App::scene3() {
 }
 
 void IG2App::scene4() {
-	narizNode = mSM->getRootSceneNode()->createChildSceneNode("noria");
-	Noria* noria = new Noria(narizNode);
+	MeshManager::getSingleton().createPlane("mallaplano",
+		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+		Plane(Vector3::UNIT_Y, 0),
+		3000, 3000, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
+
+	Ogre::Entity* plano = mSM->createEntity("mallaplano");
+	planoNode = mSM->getRootSceneNode()->createChildSceneNode("plano");
+	planoNode->attachObject(plano);
+
+	noriaNode = planoNode->createChildSceneNode("noria");
+	noria = new Noria(noriaNode, 13);
 	addInputListener(noria);
+	
+	monhecoNode = planoNode->createChildSceneNode("monheco");
+	monheco = new Monheco(monhecoNode);
+	monhecoNode->setPosition(500, 80, 500);
+	monhecoNode->yaw(Ogre::Degree(180));
 }
 
 

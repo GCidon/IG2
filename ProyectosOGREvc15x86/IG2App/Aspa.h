@@ -26,22 +26,24 @@ public:
 		cubo = mNode->createChildSceneNode();
 		ent = mSM->createEntity("cube.mesh");
 		cubo->attachObject(ent);
-		cubo->setPosition(0, 0, 0);
+		cubo->setPosition(700, 0, 0);
 		cubo->setScale(1, 1, 1);
 
 		aspa1 = mNode->createChildSceneNode();
 		ent = mSM->createEntity("cube.mesh");
 		aspa1->attachObject(ent);
-		aspa1->setPosition(-300, 0, 50);
+		aspa1->setPosition(350, 0, 50);
 		aspa1->setScale(7, 0.5, 0.1);
 
 		aspa2 = mNode->createChildSceneNode();
 		ent = mSM->createEntity("cube.mesh");
 		aspa2->attachObject(ent);
-		aspa2->setPosition(-300, 0, -50);
+		aspa2->setPosition(350, 0, -50);
 		aspa2->setScale(7, 0.5, 0.1);
 	}
-	~Aspa() {}
+	~Aspa() {
+	
+	}
 
 	void roll(int grado) {
 		cubo->roll(Ogre::Degree(-grado));
