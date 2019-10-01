@@ -4,14 +4,13 @@
 #include <OgreSceneManager.h>
 #include <OgreEntity.h>
 #include <OgreInput.h>
+#include "EntityIG.h"
 #include <string>
 
 class Aspa :
-	public OgreBites::InputListener
+	public EntityIG
 {
 protected:
-	Ogre::SceneNode* mNode;
-	Ogre::SceneManager* mSM;
 	Ogre::SceneNode* aspa1;
 	Ogre::SceneNode* aspa2;
 	Ogre::SceneNode* cubo;
@@ -19,8 +18,7 @@ protected:
 	int incrX = 0;
 
 public:
-	Aspa(Ogre::SceneNode* node) : mNode(node) {
-		mSM = mNode->getCreator();
+	Aspa(Ogre::SceneNode* node) : EntityIG(node) {
 		Ogre::Entity* ent;
 
 		cubo = mNode->createChildSceneNode();

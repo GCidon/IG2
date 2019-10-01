@@ -247,9 +247,9 @@ void IG2App::scene4() {
 		Plane(Vector3::UNIT_Y, 0),
 		3000, 3000, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
 
-	Ogre::Entity* plano = mSM->createEntity("mallaplano");
 	planoNode = mSM->getRootSceneNode()->createChildSceneNode("plano");
-	planoNode->attachObject(plano);
+	plano = new Plano(planoNode);
+	addInputListener(plano);
 
 	noriaNode = planoNode->createChildSceneNode("noria");
 	noria = new Noria(noriaNode, 13);
@@ -258,7 +258,8 @@ void IG2App::scene4() {
 	monhecoNode = planoNode->createChildSceneNode("monheco");
 	monheco = new Monheco(monhecoNode);
 	monhecoNode->setPosition(500, 80, 500);
-	monhecoNode->yaw(Ogre::Degree(180));
+	addInputListener(monheco);
+
 }
 
 

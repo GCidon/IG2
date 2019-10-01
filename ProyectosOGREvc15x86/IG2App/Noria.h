@@ -7,16 +7,16 @@
 #include <SDL_keycode.h>
 #include <string>
 #include "Aspa.h"
+#include "EntityIG.h"
 #include <vector>
 
 using namespace std;
 
 class Noria :
-	public OgreBites::InputListener
+	public EntityIG
 {
 protected:
-	Ogre::SceneNode* mNode;
-	Ogre::SceneManager* mSM;
+
 	std::vector<Ogre::SceneNode*> aspasNode;
 	std::vector<Aspa*> aspas;
 	Ogre::SceneNode* cilindro;
@@ -24,8 +24,8 @@ protected:
 	int numAspas;
 
 public:
-	Noria(Ogre::SceneNode* node, int n) : mNode(node), numAspas(n) {
-		mSM = mNode->getCreator();
+	Noria(Ogre::SceneNode* node, int n) : EntityIG(node), numAspas(n) {
+	
 		Ogre::Entity* ent;
 		int incr = 360 / n;
 		for (int i = 0; i <= n-1; i++) {
@@ -50,11 +50,8 @@ public:
 		}
 	}
 
-	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt) {
-		if (evt.keysym.sym == SDLK_q) {
-			roll(3);
-		}
-		return true;
+	virtual void frameRendered(const Ogre::FrameEvent& evt) {
+		roll(3);
 	}
 
 	void roll(int grado) {
