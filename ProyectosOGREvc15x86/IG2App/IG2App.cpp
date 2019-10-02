@@ -94,7 +94,7 @@ void IG2App::setupScene(void)
 
   Light* luz = mSM->createLight("Luz");
   luz->setType(Ogre::Light::LT_DIRECTIONAL);
-  luz->setDiffuseColour(1.0, 105.0/255.0, 180.0/255.0);
+  luz->setDiffuseColour(1.0, 1.0, 1.0);
 
   mLightNode = mSM->getRootSceneNode()->createChildSceneNode("nLuz");
   //mLightNode = mCamNode->createChildSceneNode("nLuz");

@@ -37,6 +37,7 @@ public:
 
 		cilindro = mNode->createChildSceneNode("centro");
 		ent = mSM->createEntity("Barrel.mesh");
+		ent->setMaterialName("piedra");
 		cilindro->attachObject(ent);
 		cilindro->setScale(30, 30, 30);
 		cilindro->pitch(Ogre::Degree(90));
@@ -51,7 +52,7 @@ public:
 	}
 
 	virtual void frameRendered(const Ogre::FrameEvent& evt) {
-		roll(3);
+		roll(1);
 	}
 
 	void roll(int grado) {

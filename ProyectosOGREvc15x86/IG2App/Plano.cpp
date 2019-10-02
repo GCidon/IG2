@@ -2,6 +2,7 @@
 
 Plano::Plano(Ogre::SceneNode* node) : EntityIG(node) {
 	Ogre::Entity* ent = mSM->createEntity("mallaplano");
+	ent->setMaterialName("water");
 	mNode->attachObject(ent);
 }
 
