@@ -22,6 +22,7 @@ protected:
 	Ogre::SceneNode* cilindro;
 
 	int numAspas;
+	bool parao = false;
 
 public:
 	Noria(Ogre::SceneNode* node, int n) : EntityIG(node), numAspas(n) {
@@ -52,7 +53,12 @@ public:
 	}
 
 	virtual void frameRendered(const Ogre::FrameEvent& evt) {
-		roll(1);
+		if(!parao)
+			roll(1);
+	}
+
+	virtual void receiveEvent(EntityIG* entidad) {
+		parao = !parao;
 	}
 
 	void roll(int grado) {

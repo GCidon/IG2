@@ -12,6 +12,9 @@ class Plano :
 public:
 	Plano(Ogre::SceneNode* node);
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);
+	virtual void receiveEvent(EntityIG* entidad);
 
+protected:
+	Ogre::Entity* planoEnt;
 };
 

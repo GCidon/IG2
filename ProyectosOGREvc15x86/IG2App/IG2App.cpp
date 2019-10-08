@@ -250,15 +250,18 @@ void IG2App::scene4() {
 	planoNode = mSM->getRootSceneNode()->createChildSceneNode("plano");
 	plano = new Plano(planoNode);
 	addInputListener(plano);
+	plano->addListener(plano);
 
 	noriaNode = planoNode->createChildSceneNode("noria");
 	noria = new Noria(noriaNode, 13);
 	addInputListener(noria);
+	noria->addListener(noria);
 	
 	monhecoNode = planoNode->createChildSceneNode("monheco");
 	monheco = new Monheco(monhecoNode);
 	monhecoNode->setPosition(500, 80, 500);
 	addInputListener(monheco);
+	monheco->addListener(monheco);
 
 }
 

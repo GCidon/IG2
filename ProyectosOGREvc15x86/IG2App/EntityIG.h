@@ -29,5 +29,8 @@ protected:
 
 	virtual void frameRendered(const Ogre::FrameEvent& evt) {}
 
+	void sendEvent(EntityIG* entidad);
+	virtual void receiveEvent(EntityIG* entidad) {}
+
 };
 

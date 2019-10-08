@@ -64,3 +64,59 @@ material water {
         }
     }
 }
+
+material aguaparao {
+    technique {
+        pass{
+            texture_unit {
+                texture Water02.jpg
+            }
+        }
+    }
+}
+
+material cara {
+    technique {
+        pass{
+            texture_unit {
+                texture spotlight_image.png
+                env_map spherical
+            }
+        }
+    }
+}
+
+material ajedrez {
+    technique {
+        pass{
+            texture_unit {
+                texture checker.png
+                env_map spherical
+            }
+        }
+    }
+}
+
+material elplan {
+    technique {
+        pass{
+            diffuse 1.0 0.0 0.0
+            texture_unit {
+                texture spotlight_image.png
+                env_map spherical
+            }
+        }
+    }
+}
+
+material elplancuerpo {
+    technique {
+        pass{
+            diffuse 1.0 0.0 0.0
+            texture_unit {
+                texture checker.png
+                env_map spherical
+            }
+        }
+    }
+}

@@ -1,9 +1,9 @@
 #include "Plano.h"
 
 Plano::Plano(Ogre::SceneNode* node) : EntityIG(node) {
-	Ogre::Entity* ent = mSM->createEntity("mallaplano");
-	ent->setMaterialName("water");
-	mNode->attachObject(ent);
+	planoEnt = mSM->createEntity("mallaplano");
+	planoEnt->setMaterialName("water");
+	mNode->attachObject(planoEnt);
 }
 
 bool Plano::keyPressed(const OgreBites::KeyboardEvent& evt) {
@@ -11,4 +11,8 @@ bool Plano::keyPressed(const OgreBites::KeyboardEvent& evt) {
 		mNode->yaw(Ogre::Degree(3));
 	}
 	return true;
+}
+
+void Plano::receiveEvent(EntityIG* entidad) {
+	planoEnt->setMaterialName("aguaparao");
 }

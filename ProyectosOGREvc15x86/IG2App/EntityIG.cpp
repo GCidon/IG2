@@ -9,3 +9,8 @@ EntityIG::EntityIG(Ogre::SceneNode* nodo) : mNode(nodo) {
 EntityIG::~EntityIG() {
 
 }
+
+void EntityIG::sendEvent(EntityIG* entidad) {
+	for (EntityIG* e : appListeners)
+		e->receiveEvent(this);
+}

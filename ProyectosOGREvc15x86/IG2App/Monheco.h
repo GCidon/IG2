@@ -8,6 +8,7 @@
 #include <string>
 #include "Aspa.h"
 #include "EntityIG.h"
+#include <math.h>
 #include <vector>
 
 using namespace std;
@@ -19,12 +20,14 @@ protected:
 	Ogre::SceneNode* cuelloNode;
 	Ogre::SceneNode* cabezaNode;
 	Ogre::SceneNode* cuerpoNode;
-	Ogre::SceneNode* narizNode;
 	Ogre::SceneNode* ombligoNode;
+	Ogre::Entity* cabezaEnt;
+	Ogre::Entity* cuerpoEnt;
 	int rotacionCabeza;
 	bool auxMov = false;
 	bool auxNariz = false;
 	bool parao = false;
+	float angle = 0;
 
 public:
 	Monheco(Ogre::SceneNode* node) : EntityIG(node) {
@@ -34,23 +37,17 @@ public:
 		cuelloNode = mNode->createChildSceneNode("cuello");
 
 		cabezaNode = cuelloNode->createChildSceneNode("cabeza");
-		ent = mSM->createEntity("sphere.mesh");
-		ent->setMaterialName("carne");
-		cabezaNode->attachObject(ent);
+		cabezaEnt = mSM->createEntity("sphere.mesh");
+		cabezaEnt->setMaterialName("cara");
+		cabezaNode->attachObject(cabezaEnt);
 		cabezaNode->setScale(0.5, 0.5, 0.5);
-		narizNode = cabezaNode->createChildSceneNode("nariz");
-		ent = mSM->createEntity("sphere.mesh");
-		ent->setMaterialName("nariz");
-		narizNode->attachObject(ent);
-		narizNode->setPosition(0, 0, 100);
-		narizNode->setScale(0.1, 0.1, 0.1);
 		cabezaNode->setPosition(0, 145, 0);
 
 
 		cuerpoNode = cuelloNode->createChildSceneNode("cuerpo");
-		ent = mSM->createEntity("sphere.mesh");
-		ent->setMaterialName("carne");
-		cuerpoNode->attachObject(ent);
+		cuerpoEnt = mSM->createEntity("sphere.mesh");
+		cuerpoEnt->setMaterialName("ajedrez");
+		cuerpoNode->attachObject(cuerpoEnt);
 		ombligoNode = cuerpoNode->createChildSceneNode("ombligo");
 		ent = mSM->createEntity("sphere.mesh");
 		ent->setMaterialName("ombligo");
@@ -73,23 +70,42 @@ public:
 			if (cuelloNode->getPosition().x < -1500) auxMov = true;
 			else if (cuelloNode->getPosition().x > 500) auxMov = false;
 		}
-		if (!auxNariz) {
-			cabezaNode->yaw(Ogre::Degree(3));
-			rotacionCabeza += 3;
-		}
-		else {
-			cabezaNode->yaw(Ogre::Degree(-3));
-			rotacionCabeza -= 3;
-		}
-		if (rotacionCabeza > 90) auxNariz = true;
-		else if (rotacionCabeza < -90) auxNariz = false;
 
 	}
 
+	virtual void receiveEvent(EntityIG* entidad) {
+		cabezaEnt->setMaterialName("elplan");
+		cuerpoEnt->setMaterialName("elplancuerpo");
+	}
+
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt) {
+		double x = cos(angle * 3.1416 / 180);
+		double z = -sin(angle * 3.1416 / 180);
 		if (evt.keysym.sym == SDLK_q)
 		{
 			parao = !parao;
+		}
+		else if (evt.keysym.sym == SDLK_UP) 
+		{
+			cuelloNode->setPosition(cuelloNode->getPosition() + Ogre::Vector3(x, 0, z) * 10);
+		}
+		else if (evt.keysym.sym == SDLK_DOWN) 
+		{
+			cuelloNode->setPosition(cuelloNode->getPosition() + Ogre::Vector3(x, 0, z) * -10);
+		}
+		else if (evt.keysym.sym == SDLK_LEFT) 
+		{
+			cuelloNode->rotate(Ogre::Vector3(0, 1, 0), Ogre::Degree(10));
+			angle += 10;
+		}
+		else if (evt.keysym.sym == SDLK_RIGHT) 
+		{
+			angle += -10;
+			cuelloNode->rotate(Ogre::Vector3(0, 1, 0), Ogre::Degree(-10));
+		}
+		else if (evt.keysym.sym == SDLK_r) 
+		{
+			sendEvent(this);
 		}
 		return true;
 	}
