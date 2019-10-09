@@ -88,10 +88,12 @@ public:
 		else if (evt.keysym.sym == SDLK_UP) 
 		{
 			cuelloNode->setPosition(cuelloNode->getPosition() + Ogre::Vector3(x, 0, z) * 10);
+			cuerpoNode->roll(Ogre::Degree(-10), Ogre::Node::TS_LOCAL);
 		}
 		else if (evt.keysym.sym == SDLK_DOWN) 
 		{
 			cuelloNode->setPosition(cuelloNode->getPosition() + Ogre::Vector3(x, 0, z) * -10);
+			cuerpoNode->roll(Ogre::Degree(10), Ogre::Node::TS_LOCAL);
 		}
 		else if (evt.keysym.sym == SDLK_LEFT) 
 		{
