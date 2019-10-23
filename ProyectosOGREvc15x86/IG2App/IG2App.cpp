@@ -88,6 +88,11 @@ void IG2App::setupScene(void)
 	//mCamNode->setDirection(Ogre::Vector3(0, 0, -1));  
 
 	Camera* camRef = mSM->createCamera("RefCam");
+	camRef->setNearClipDistance(1);
+	camRef->setFarClipDistance(10000);
+	camRef->setAutoAspectRatio(true);
+
+	mCamNode->attachObject(camRef);
 
 
 	// and tell it to render into the main window
@@ -254,14 +259,41 @@ void IG2App::scene4() {
 		Plane(Vector3::UNIT_Y, 0),
 		3000, 3000, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
 
+	//
 
+	TexturePtr rttRef = TextureManager::getSingleton().createManual("rttReflejo", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+		TEX_TYPE_2D,
+		(Real)mWindow.render->getViewport(0)->getActualWidth(), 
+		(Real)mSM->getCamera("Cam")->getViewport()->getActualHeight(), 
+		0, PF_R8G8B8, TU_RENDERTARGET);
+
+	RenderTexture* renderTexture = rttRef->getBuffer()->getRenderTarget();
+	Viewport* vpt = renderTexture->addViewport(mSM->getCamera("RefCam"));
+	vpt->setClearEveryFrame(true); 
+	vpt->setBackgroundColour(ColourValue::White);
+
+	//
 
 	planoNode = mSM->getRootSceneNode()->createChildSceneNode("plano");
 	plano = new Plano(planoNode);
 	addInputListener(plano);
 	plano->addListener(plano);
 
-	//mSM->getCamera("cam")->enableReflection(plano)
+	TextureUnitState* tu = entityReflejo->getSubEntity(0)->getMaterial()->
+		getTechnique(0)->getPass(0)->
+		createTextureUnitState("rttReflejo");
+	tu->setColourOperation(LBO_MODULATE);
+
+	tu->setProjectiveTexturing(true, mSM->getCamera("RefCam"));
+
+	entityReflejo->setMaterialName("rttReflejo");
+	planoNode->attachObject(entityReflejo);
+	entityReflejo->getSubEntity(0)->getMaterial()->getTechnique(0)->getPass(0)->createTextureUnitState("rttReflejo");
+
+	MovablePlane* mpRef = new MovablePlane(Vector3(0, 1, 0), Vector3(0, 0, 0));
+	planoNode->attachObject(mpRef);
+	mSM->getCamera("RefCam")->enableReflection(mpRef);
+	mSM->getCamera("RefCam")->enableCustomNearClipPlane(mpRef);
 
 	noriaNode = planoNode->createChildSceneNode("noria");
 	noria = new Noria(noriaNode, 13);

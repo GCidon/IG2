@@ -84,7 +84,7 @@ material reflejo {
             texture_unit {
                 texture Water02.jpg
                 scroll_anim -0.1 0.0
-                color_op add
+                colour_op add
             }
         }
     }
@@ -146,7 +146,7 @@ material space {
             texture_unit {
                 texture lightMap.jpg
                 scroll_anim 0.1 0.0
-                color_op modulate
+                colour_op modulate
             }
         }
     }
