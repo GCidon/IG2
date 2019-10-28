@@ -254,46 +254,17 @@ void IG2App::scene3() {
 }
 
 void IG2App::scene4() {
+
+	//Este es el plano tanto para el rio/piedras como para el reflejo (se aplica todo sobre este)
 	MeshManager::getSingleton().createPlane("mallaplano",
 		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
 		Plane(Vector3::UNIT_Y, 0),
 		3000, 3000, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
 
-	//
-
-	TexturePtr rttRef = TextureManager::getSingleton().createManual("rttReflejo", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-		TEX_TYPE_2D,
-		(Real)mWindow.render->getViewport(0)->getActualWidth(), 
-		(Real)mSM->getCamera("Cam")->getViewport()->getActualHeight(), 
-		0, PF_R8G8B8, TU_RENDERTARGET);
-
-	RenderTexture* renderTexture = rttRef->getBuffer()->getRenderTarget();
-	Viewport* vpt = renderTexture->addViewport(mSM->getCamera("RefCam"));
-	vpt->setClearEveryFrame(true); 
-	vpt->setBackgroundColour(ColourValue::White);
-
-	//
-
 	planoNode = mSM->getRootSceneNode()->createChildSceneNode("plano");
-	plano = new Plano(planoNode);
+	plano = new Plano(planoNode, mSM->getCamera("Cam"));
 	addInputListener(plano);
 	plano->addListener(plano);
-
-	TextureUnitState* tu = entityReflejo->getSubEntity(0)->getMaterial()->
-		getTechnique(0)->getPass(0)->
-		createTextureUnitState("rttReflejo");
-	tu->setColourOperation(LBO_MODULATE);
-
-	tu->setProjectiveTexturing(true, mSM->getCamera("RefCam"));
-
-	entityReflejo->setMaterialName("rttReflejo");
-	planoNode->attachObject(entityReflejo);
-	entityReflejo->getSubEntity(0)->getMaterial()->getTechnique(0)->getPass(0)->createTextureUnitState("rttReflejo");
-
-	MovablePlane* mpRef = new MovablePlane(Vector3(0, 1, 0), Vector3(0, 0, 0));
-	planoNode->attachObject(mpRef);
-	mSM->getCamera("RefCam")->enableReflection(mpRef);
-	mSM->getCamera("RefCam")->enableCustomNearClipPlane(mpRef);
 
 	noriaNode = planoNode->createChildSceneNode("noria");
 	noria = new Noria(noriaNode, 13);
