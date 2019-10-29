@@ -10,6 +10,7 @@
 #include "Noria.h"
 #include "Monheco.h"
 #include "Plano.h"
+#include "Sinbad.h"
 
 using namespace std;
 
@@ -58,6 +59,9 @@ protected:
   Noria* noria;
   Monheco* monheco;
   Plano* plano;
+
+  Ogre::SceneNode* sinbadNode = nullptr;
+  Sinbad* sinbad;
 
  
 };

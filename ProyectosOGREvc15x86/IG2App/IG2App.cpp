@@ -261,10 +261,17 @@ void IG2App::scene4() {
 		Plane(Vector3::UNIT_Y, 0),
 		3000, 3000, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
 
+	
+
 	planoNode = mSM->getRootSceneNode()->createChildSceneNode("plano");
 	plano = new Plano(planoNode, mSM->getCamera("Cam"));
 	addInputListener(plano);
 	plano->addListener(plano);
+
+	sinbadNode = planoNode->createChildSceneNode("sinbad");
+	sinbad = new Sinbad(sinbadNode);
+	addInputListener(sinbad);
+	sinbad->addListener(sinbad);
 
 	noriaNode = planoNode->createChildSceneNode("noria");
 	noria = new Noria(noriaNode, 13);
