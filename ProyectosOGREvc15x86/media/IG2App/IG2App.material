@@ -151,3 +151,13 @@ material space {
         }
     }
 }
+
+material bomb {
+    technique {
+        pass {
+            texture_unit {
+                texture BumpyMetal.jpg
+            }
+        }
+    }
+}

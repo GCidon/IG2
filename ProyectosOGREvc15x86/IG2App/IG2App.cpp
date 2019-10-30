@@ -170,89 +170,6 @@ void IG2App::retroceso() {
 	mSM->getSceneNode("cuerpo")->rotate(Vector3(1, 0, -1), Ogre::Degree(-2));
 }
 
-void IG2App::scene1() {
-	clockNode = mSM->getRootSceneNode()->createChildSceneNode("clockNode");
-	knotNode = mSM->getRootSceneNode()->createChildSceneNode("knotNode");
-
-	Ogre::Entity* ent;
-	Ogre::Entity* nudo;
-	int ini = 90;
-	int incr = 360 / 12;
-
-	for (int i = 0; i <= 11; i++) {
-		aspasNode[i] = clockNode->createChildSceneNode("cubo_" + to_string(i));
-		ent = mSM->createEntity("cube.mesh");
-		aspasNode[i]->attachObject(ent);
-		if (i % 2 == 0)
-			mSM->getSceneNode("cubo_" + to_string(i))->setScale(0.5, 0.5, 0.5);
-		aspasNode[i]->setPosition(Ogre::Math::Cos(Ogre::Degree(ini + incr * i)) * 300, Ogre::Math::Sin(Ogre::Degree(ini + incr * i)) * 300, 0);
-	}
-	nudo = mSM->createEntity("knot.mesh");
-	knotNode->attachObject(nudo);
-	knotNode->setScale(1, 1, 1);
-	clockNode->setScale(1, 1, 1);
-
-	//clockNode->yaw(Ogre::Degree(-90));
-	clockNode->showBoundingBox(true);
-	knotNode->showBoundingBox(true);
-	//clockNode->setVisible(false);
-}
-void IG2App::scene2() {
-	clockNode = mSM->getRootSceneNode()->createChildSceneNode("clockNode");
-	Ogre::Entity* ent;
-	int ini = 90;
-	int incr = 360 / 12;
-	for (int i = 0; i <= 11; i++) {
-		aspasNode[i] = clockNode->createChildSceneNode("cubo_" + to_string(i));
-		ent = mSM->createEntity("cube.mesh");
-		aspasNode[i]->attachObject(ent);
-		aspasNode[i]->setPosition(Ogre::Math::Cos(Ogre::Degree(ini + incr * i)) * 300, Ogre::Math::Sin(Ogre::Degree(ini + incr * i)) * 300, 0);
-
-		aspasNode[i] = clockNode->createChildSceneNode("aspa1_" + to_string(i));
-		ent = mSM->createEntity("cube.mesh");
-		aspasNode[i]->attachObject(ent);
-		aspasNode[i]->setPosition(Ogre::Math::Cos(Ogre::Degree(ini + incr * i)) * 150, Ogre::Math::Sin(Ogre::Degree(ini + incr * i)) * 150, 50);
-		aspasNode[i]->roll(Ogre::Degree(ini + incr * i));
-		aspasNode[i]->setScale(3, 0.5, 0.1);
-
-		aspasNode[i] = clockNode->createChildSceneNode("aspa2_" + to_string(i));
-		ent = mSM->createEntity("cube.mesh");
-		aspasNode[i]->attachObject(ent);
-		aspasNode[i]->setPosition(Ogre::Math::Cos(Ogre::Degree(ini + incr * i)) * 150, Ogre::Math::Sin(Ogre::Degree(ini + incr * i)) * 150, -50);
-		aspasNode[i]->roll(Ogre::Degree(ini + incr * i));
-		aspasNode[i]->setScale(3, 0.5, 0.1);
-	}
-
-	clockNode->setScale(1, 1, 1);
-	clockNode->showBoundingBox(true);
-}
-void IG2App::scene3() {
-	monhecoNode = mSM->getRootSceneNode()->createChildSceneNode("monheco");
-	Ogre::Entity* ent;
-
-	cabezaNode = monhecoNode->createChildSceneNode("cabeza");
-	ent = mSM->createEntity("sphere.mesh");
-	cabezaNode->attachObject(ent);
-	cabezaNode->setScale(0.5, 0.5, 0.5);
-	narizNode = cabezaNode->createChildSceneNode("nariz");
-	ent = mSM->createEntity("sphere.mesh");
-	narizNode->attachObject(ent);
-	narizNode->setPosition(75, 0, 75);
-	narizNode->setScale(0.1, 0.1, 0.1);
-	cabezaNode->setPosition(0, 145, 0);
-
-	cuerpoNode = monhecoNode->createChildSceneNode("cuerpo");
-	ent = mSM->createEntity("sphere.mesh");
-	cuerpoNode->attachObject(ent);
-	ombligoNode = cuerpoNode->createChildSceneNode("ombligo");
-	ent = mSM->createEntity("sphere.mesh");
-	ombligoNode->attachObject(ent);
-	ombligoNode->setPosition(75, 0, 75);
-	ombligoNode->setScale(0.1, 0.1, 0.1);
-	cuerpoNode->setPosition(0, 0, 0);
-
-}
-
 void IG2App::scene4() {
 
 	//Este es el plano tanto para el rio/piedras como para el reflejo (se aplica todo sobre este)
@@ -269,7 +186,7 @@ void IG2App::scene4() {
 	plano->addListener(plano);
 
 	sinbadNode = planoNode->createChildSceneNode("sinbad");
-	sinbad = new Sinbad(sinbadNode);
+	sinbad = new Sinbad(sinbadNode, 15);
 	addInputListener(sinbad);
 	sinbad->addListener(sinbad);
 
@@ -283,6 +200,12 @@ void IG2App::scene4() {
 	monhecoNode->setPosition(500, 80, 500);
 	addInputListener(monheco);
 	monheco->addListener(monheco);
+
+	bombNode = planoNode->createChildSceneNode("bomb");
+	bomb = new Bomb(bombNode, 12);
+	bombNode->setPosition(0, 0, 200);
+	addInputListener(bomb);
+	monheco->addListener(bomb);
 
 }
 

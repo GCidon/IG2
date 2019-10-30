@@ -11,6 +11,7 @@
 #include "Monheco.h"
 #include "Plano.h"
 #include "Sinbad.h"
+#include "Bomb.h"
 
 using namespace std;
 
@@ -25,9 +26,6 @@ protected:
   virtual void setup();
   virtual void shutdown();
   virtual void setupScene();
-  void scene1();
-  void scene2();
-  void scene3();
   void scene4();
   void rotateroll(string node);
   void rotateposition(string node);
@@ -62,6 +60,9 @@ protected:
 
   Ogre::SceneNode* sinbadNode = nullptr;
   Sinbad* sinbad;
+
+  Ogre::SceneNode* bombNode = nullptr;
+  Bomb* bomb;
 
  
 };
