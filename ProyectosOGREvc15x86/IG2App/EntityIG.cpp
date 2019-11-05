@@ -10,7 +10,7 @@ EntityIG::~EntityIG() {
 
 }
 
-void EntityIG::sendEvent(EntityIG* entidad) {
+void EntityIG::sendEvent(EntityIG* entidad, int evento) {
 	for (EntityIG* e : appListeners)
-		e->receiveEvent(this);
+		e->receiveEvent(this, evento);
 }

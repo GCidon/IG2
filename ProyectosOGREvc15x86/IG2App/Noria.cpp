@@ -32,8 +32,16 @@ void Noria::frameRendered(const Ogre::FrameEvent& evt) {
 		roll(1);
 }
 
-void Noria::receiveEvent(EntityIG* entidad) {
-	parao = !parao;
+void Noria::receiveEvent(EntityIG* entidad, int evento) {
+	switch (evento)
+	{
+	case Parar:
+		parao = !parao;
+		break;
+	default:
+		break;
+	}
+	
 }
 
 void Noria::roll(int grado) {

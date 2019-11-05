@@ -48,6 +48,13 @@ bool Plano::keyPressed(const OgreBites::KeyboardEvent& evt) {
 	return true;
 }
 
-void Plano::receiveEvent(EntityIG* entidad) {
-	planoEnt->setMaterialName("reflejo");
+void Plano::receiveEvent(EntityIG* entidad, int evento) {
+	switch (evento)
+	{
+	case Parar:
+		planoEnt->setMaterialName("reflejo");
+		break;
+	default:
+		break;
+	}
 }

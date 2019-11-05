@@ -1,5 +1,6 @@
 #include "Sinbad.h"
 
+
 Sinbad::Sinbad(Ogre::SceneNode* node, Ogre::Real dur) : EntityIG(node) {
 	ent = mSM->createEntity("Sinbad.mesh");
 	mNode->attachObject(ent);
@@ -24,7 +25,68 @@ Sinbad::Sinbad(Ogre::SceneNode* node, Ogre::Real dur) : EntityIG(node) {
 	runTop->setLoop(true);
 
 	duracion = dur;
+	animacionPatrulla();
 
+}
+
+bool Sinbad::keyPressed(const OgreBites::KeyboardEvent& evt) {
+	if (evt.keysym.sym == SDLK_c)
+	{
+		aux = !aux;
+		ent->detachObjectFromBone(swordR);
+		ent->detachObjectFromBone(swordL);
+		if (aux) {
+			ent->attachObjectToBone("Sheath.R", swordR);
+			ent->attachObjectToBone("Sheath.L", swordL);
+		}
+		else {
+			ent->attachObjectToBone("Handle.R", swordR);
+			ent->attachObjectToBone("Sheath.L", swordL);
+		}
+	}
+	if (evt.keysym.sym == SDLK_h)
+	{
+		sendEvent(this, Explosion);
+	}
+	
+	return true;
+}
+
+void Sinbad::frameRendered(const Ogre::FrameEvent& evt) {
+	if (aux) {
+		runBase->setEnabled(false);
+		runTop->setEnabled(false);
+		bailar->setEnabled(true);
+		vueltaState->setEnabled(false);
+		bailar->addTime(evt.timeSinceLastFrame);
+	}
+	else {
+		bailar->setEnabled(false);
+		runBase->setEnabled(true);
+		runTop->setEnabled(true);
+		vueltaState->setEnabled(true);
+		runBase->addTime(evt.timeSinceLastFrame);
+		runTop->addTime(evt.timeSinceLastFrame);
+		vueltaState->addTime(evt.timeSinceLastFrame);
+	}
+}
+
+void Sinbad::receiveEvent(EntityIG* entidad, int evento) {
+	switch (evento)
+	{
+	case Explosion:
+		if (!muerto) {
+			//vueltaState->setEnabled(false);
+			animacionHaciaBomba();			
+			muerto = true;
+		}
+		break;
+	default:
+		break;
+	}
+}
+void Sinbad::animacionPatrulla()
+{
 	vuelta = mSM->createAnimation("vuelta", duracion);
 	vueltaTrack = vuelta->createNodeTrack(0);
 	vueltaTrack->setAssociatedNode(mNode);
@@ -85,40 +147,29 @@ Sinbad::Sinbad(Ogre::SceneNode* node, Ogre::Real dur) : EntityIG(node) {
 	vueltaState->setLoop(true);
 }
 
-bool Sinbad::keyPressed(const OgreBites::KeyboardEvent& evt) {
-	if (evt.keysym.sym == SDLK_c)
-	{
-		aux = !aux;
-		ent->detachObjectFromBone(swordR);
-		ent->detachObjectFromBone(swordL);
-		if (aux) {
-			ent->attachObjectToBone("Sheath.R", swordR);
-			ent->attachObjectToBone("Sheath.L", swordL);
-		}
-		else {
-			ent->attachObjectToBone("Handle.R", swordR);
-			ent->attachObjectToBone("Sheath.L", swordL);
-		}
-	}
-	
-	return true;
-}
+void Sinbad::animacionHaciaBomba() {
+	vuelta = mSM->createAnimation("bomba", duracion);
+	vueltaTrack = vuelta->createNodeTrack(0);
+	vueltaTrack->setAssociatedNode(mNode);
+	mNode->setInitialState();
 
-void Sinbad::frameRendered(const Ogre::FrameEvent& evt) {
-	if (aux) {
-		runBase->setEnabled(false);
-		runTop->setEnabled(false);
-		bailar->setEnabled(true);
-		vueltaState->setEnabled(false);
-		bailar->addTime(evt.timeSinceLastFrame);
-	}
-	else {
-		bailar->setEnabled(false);
-		runBase->setEnabled(true);
-		runTop->setEnabled(true);
-		vueltaState->setEnabled(true);
-		runBase->addTime(evt.timeSinceLastFrame);
-		runTop->addTime(evt.timeSinceLastFrame);
-		vueltaState->addTime(evt.timeSinceLastFrame);
-	}
+	Ogre::Vector3 keyFramePos;// = mNode->getPosition();
+	Ogre::Vector3 src = Ogre::Vector3(0, 0, 1);
+	Ogre::Real durPaso = duracion / 5.0;
+
+	Ogre::TransformKeyFrame* kf;
+
+	kf = vueltaTrack->createNodeKeyFrame(durPaso * 0);
+	//kf->setTranslate(keyFramePos);
+	kf->setRotation(src.getRotationTo(Ogre::Vector3(0., 0., 200.)));
+
+	kf = vueltaTrack->createNodeKeyFrame(durPaso * 5.0);
+	keyFramePos -= (keyFramePos - Ogre::Vector3(0., 0., 200.));
+	kf->setTranslate(keyFramePos);
+	kf->setRotation(src.getRotationTo(Ogre::Vector3(0., 0., 200.)));
+	
+
+	vueltaState = mSM->createAnimationState("bomba");
+	vueltaState->setLoop(false);
+
 }

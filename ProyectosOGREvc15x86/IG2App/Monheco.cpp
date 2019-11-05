@@ -43,9 +43,16 @@ void Monheco::frameRendered(const Ogre::FrameEvent& evt) {
 
 }
 
-void Monheco::receiveEvent(EntityIG* entidad) {
-	cabezaEnt->setMaterialName("elplan");
-	cuerpoEnt->setMaterialName("elplancuerpo");
+void Monheco::receiveEvent(EntityIG* entidad, int evento) {
+	switch (evento)
+	{
+	case Parar:
+		cabezaEnt->setMaterialName("elplan");
+		cuerpoEnt->setMaterialName("elplancuerpo");
+		break;
+	default:
+		break;
+	}
 }
 
 bool Monheco::keyPressed(const OgreBites::KeyboardEvent& evt) {
@@ -77,7 +84,7 @@ bool Monheco::keyPressed(const OgreBites::KeyboardEvent& evt) {
 	}
 	else if (evt.keysym.sym == SDLK_r)
 	{
-		sendEvent(this);
+		sendEvent(this, Parar);
 	}
 	return true;
 }

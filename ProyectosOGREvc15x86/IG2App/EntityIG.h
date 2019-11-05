@@ -8,6 +8,8 @@
 
 using namespace std;
 
+enum Eventos{ Explosion, Parar };
+
 class EntityIG : public OgreBites::InputListener {
 
 public:
@@ -29,8 +31,8 @@ protected:
 
 	virtual void frameRendered(const Ogre::FrameEvent& evt) {}
 
-	void sendEvent(EntityIG* entidad);
-	virtual void receiveEvent(EntityIG* entidad) {}
+	void sendEvent(EntityIG* entidad, int evento);
+	virtual void receiveEvent(EntityIG* entidad, int evento) {}
 
 };
 

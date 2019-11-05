@@ -26,7 +26,11 @@ private:
 
 	Ogre::Real duracion;
 
+	bool muerto = false;
 	bool aux = false;
+private:
+	void animacionPatrulla();
+	void animacionHaciaBomba();
 
 public:
 	Sinbad(Ogre::SceneNode* node, Ogre::Real dur);
@@ -34,6 +38,7 @@ public:
 	virtual void frameRendered(const Ogre::FrameEvent& evt);
 
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);
+	virtual void receiveEvent(EntityIG* entidad, int evento);
 
 };
 

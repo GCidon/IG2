@@ -31,7 +31,7 @@ public:
 
 	virtual void frameRendered(const Ogre::FrameEvent& evt);
 
-	virtual void receiveEvent(EntityIG* entidad);
+	virtual void receiveEvent(EntityIG* entidad, int evento);
 
 	void roll(int grado);
 

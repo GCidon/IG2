@@ -35,7 +35,7 @@ public:
 
 	virtual void frameRendered(const Ogre::FrameEvent& evt);
 
-	virtual void receiveEvent(EntityIG* entidad);
+	virtual void receiveEvent(EntityIG* entidad, int evento);
 
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);
 
