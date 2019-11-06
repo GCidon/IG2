@@ -14,7 +14,6 @@ Sinbad::Sinbad(Ogre::SceneNode* node, Ogre::Real dur) : EntityIG(node) {
 	ent->attachObjectToBone("Handle.R", swordR);
 	ent->attachObjectToBone("Sheath.L", swordL);
 
-
 	bailar = ent->getAnimationState("Dance");
 	bailar->setLoop(true);
 
@@ -80,6 +79,7 @@ void Sinbad::receiveEvent(EntityIG* entidad, int evento) {
 	{
 	case Explosion:
 		if (!muerto) {
+			vueltaState->setEnabled(false);
 			animacionHaciaBomba();
 			muerto = true;
 		}
@@ -151,26 +151,35 @@ void Sinbad::animacionPatrulla()
 }
 
 void Sinbad::animacionHaciaBomba() {
-	vuelta = mSM->createAnimation("bomba", duracion);
+	vuelta = mSM->createAnimation("bomba", duracion/2.0);
 	vueltaTrack = vuelta->createNodeTrack(0);
 	vueltaTrack->setAssociatedNode(mNode);
-	//mNode->setInitialState();
 
 	Ogre::Vector3 keyFramePos = mNode->getPosition();
-	Ogre::Vector3 src = Ogre::Vector3(-1, 0, 0);
-	Ogre::Real durPaso = duracion / 2.0;
+
+	Ogre::Vector3 src = Ogre::Vector3(0., 0., 1.);//mNode->getOrientation().zAxis();
+	Ogre::Real durPaso = duracion / (0.9*2.0);
 	Ogre::Vector3 r = Ogre::Vector3(0., 250., 200.) - keyFramePos;
 
 	Ogre::TransformKeyFrame* kf;
 
 	kf = vueltaTrack->createNodeKeyFrame(durPaso * 0);
-	kf->setRotation(src.getRotationTo(r));
-
-	kf = vueltaTrack->createNodeKeyFrame(durPaso * 2.0);
-	keyFramePos = Ogre::Vector3(0., 250., 200.) - keyFramePos;
 	kf->setTranslate(keyFramePos);
 	kf->setRotation(src.getRotationTo(r));
 
+	kf = vueltaTrack->createNodeKeyFrame(durPaso * 0.5);
+	keyFramePos += (Ogre::Vector3(0., 250., 200.) - keyFramePos);
+	kf->setTranslate(keyFramePos);
+	kf->setRotation(src.getRotationTo(r));
+
+	kf = vueltaTrack->createNodeKeyFrame(durPaso * 0.7);
+	keyFramePos += Ogre::Vector3(0., 300., 0.);
+	kf->setTranslate(keyFramePos);
+
+	kf = vueltaTrack->createNodeKeyFrame(durPaso * 1.0);
+	keyFramePos -= Ogre::Vector3(0., 300., 0.);
+	kf->setTranslate(keyFramePos);
+	kf->setRotation(src.getRotationTo(r));
 
 	vueltaState = mSM->createAnimationState("bomba");
 	vueltaState->setLoop(false);
