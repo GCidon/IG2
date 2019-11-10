@@ -158,7 +158,7 @@ void Sinbad::animacionHaciaBomba() {
 	Ogre::Vector3 keyFramePos = mNode->getPosition();
 
 	Ogre::Vector3 src = Ogre::Vector3(0., 0., 1.);//mNode->getOrientation().zAxis();
-	Ogre::Real durPaso = duracion / (0.9*2.0);
+	Ogre::Real durPaso = duracion / (1.5*2.0);
 	Ogre::Vector3 r = Ogre::Vector3(0., 250., 200.) - keyFramePos;
 
 	Ogre::TransformKeyFrame* kf;
@@ -172,14 +172,22 @@ void Sinbad::animacionHaciaBomba() {
 	kf->setTranslate(keyFramePos);
 	kf->setRotation(src.getRotationTo(r));
 
-	kf = vueltaTrack->createNodeKeyFrame(durPaso * 0.7);
+	kf = vueltaTrack->createNodeKeyFrame(durPaso * 0.55);
 	keyFramePos += Ogre::Vector3(0., 300., 0.);
 	kf->setTranslate(keyFramePos);
+	kf->setRotation(src.getRotationTo(r));
 
-	kf = vueltaTrack->createNodeKeyFrame(durPaso * 1.0);
-	keyFramePos -= Ogre::Vector3(0., 300., 0.);
+	kf = vueltaTrack->createNodeKeyFrame(durPaso * 0.60);
+	keyFramePos -= Ogre::Vector3(0., 550., 0.);
 	kf->setTranslate(keyFramePos);
 	kf->setRotation(src.getRotationTo(r));
+	kf->setRotation(src.getRotationTo(Ogre::Vector3(0., 1000., 0.)));
+
+	kf = vueltaTrack->createNodeKeyFrame(durPaso * 1.5);
+	keyFramePos += Ogre::Vector3(1000., 0., 0.);
+	kf->setTranslate(keyFramePos);
+	kf->setRotation(src.getRotationTo(r));
+	kf->setRotation(src.getRotationTo(Ogre::Vector3(0., 1000., 0.)));
 
 	vueltaState = mSM->createAnimationState("bomba");
 	vueltaState->setLoop(false);
