@@ -40,13 +40,11 @@ Bomb::Bomb(Ogre::SceneNode* node, Ogre::Real dur) : EntityIG(node) {
 }
 
 void Bomb::frameRendered(const Ogre::FrameEvent& evt) {
-	if(aux)
-		vaivenState->addTime(evt.timeSinceLastFrame);
+	vaivenState->addTime(evt.timeSinceLastFrame);
 }
 
 bool Bomb::keyPressed(const OgreBites::KeyboardEvent& evt) {
 	if (evt.keysym.sym == SDLK_b) {
-		aux = !aux;
 		pSys->setEmitting(true);
 	}
 	return true; 

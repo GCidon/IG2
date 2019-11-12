@@ -19,8 +19,6 @@ private:
 
 	Ogre::Real duracion;
 
-	bool aux = true;
-
 public:
 	Bomb(Ogre::SceneNode* node, Ogre::Real dur);
 
