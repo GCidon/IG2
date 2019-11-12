@@ -33,6 +33,10 @@ Bomb::Bomb(Ogre::SceneNode* node, Ogre::Real dur) : EntityIG(node) {
 	vaivenState = mSM->createAnimationState("vaiven");
 	vaivenState->setLoop(true);
 	vaivenState->setEnabled(true);
+
+	pSys = mSM->createParticleSystem("parSys", "Smoke");
+	mNode->attachObject(pSys);
+	pSys->setEmitting(false);
 }
 
 void Bomb::frameRendered(const Ogre::FrameEvent& evt) {
@@ -43,6 +47,18 @@ void Bomb::frameRendered(const Ogre::FrameEvent& evt) {
 bool Bomb::keyPressed(const OgreBites::KeyboardEvent& evt) {
 	if (evt.keysym.sym == SDLK_b) {
 		aux = !aux;
+		pSys->setEmitting(true);
 	}
-	return true;
+	return true; 
+}
+
+void Bomb::receiveEvent(EntityIG* entidad, int evento) {
+	switch (evento)
+	{
+	case Explosion:
+		pSys->setEmitting(true);
+		break;
+	default:
+		break;
+	}
 }

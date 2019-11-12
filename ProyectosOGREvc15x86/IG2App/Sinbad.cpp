@@ -71,6 +71,10 @@ void Sinbad::frameRendered(const Ogre::FrameEvent& evt) {
 		runBase->addTime(evt.timeSinceLastFrame);
 		runTop->addTime(evt.timeSinceLastFrame);
 		vueltaState->addTime(evt.timeSinceLastFrame);
+		if (muerto && vueltaState->getTimePosition() > ((duracion / (1.5 * 2.0)) * 0.60)) {
+			runBase->setEnabled(false);
+			runTop->setEnabled(false);
+		}
 	}
 }
 
@@ -157,7 +161,7 @@ void Sinbad::animacionHaciaBomba() {
 
 	Ogre::Vector3 keyFramePos = mNode->getPosition();
 
-	Ogre::Vector3 src = Ogre::Vector3(0., 0., 1.);//mNode->getOrientation().zAxis();
+	Ogre::Vector3 src = Ogre::Vector3(0., 0., 1.);
 	Ogre::Real durPaso = duracion / (1.5*2.0);
 	Ogre::Vector3 r = Ogre::Vector3(0., 250., 200.) - keyFramePos;
 

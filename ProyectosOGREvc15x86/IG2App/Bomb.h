@@ -11,6 +11,7 @@ class Bomb :
 {
 private:
 	Ogre::Entity* ent;
+	Ogre::ParticleSystem* pSys;
 
 	Ogre::Animation* vaiven;
 	Ogre::NodeAnimationTrack* vaivenTrack;
@@ -25,5 +26,6 @@ public:
 
 	virtual void frameRendered(const Ogre::FrameEvent& evt);
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);
+	virtual void receiveEvent(EntityIG* entidad, int evento);
 };
 
