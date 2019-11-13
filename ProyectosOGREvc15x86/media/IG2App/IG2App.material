@@ -180,3 +180,54 @@ material Smoke
         }
     }
 }
+
+vertex_program Ejercicio1VS glsl
+{
+    source Ejercicio1VS.glsl
+    default_params 
+    {
+        param_named_auto modelViewProjMat worldviewproj_matrix
+        param_named_auto t time
+    }
+}
+
+fragment_program Ejercicio1FS glsl 
+{
+    source Ejercicio1FS.glsl 
+    default_params 
+    {
+        param_named textura0 int 0 
+        param_named textura1 int 1 
+        param_named FB float 0.5
+        param_named intLuzAmb float 1.0
+    }
+}
+
+material spaceGLSL
+{
+    technique
+    {
+        pass
+        {
+            vertex_program_ref Ejercicio1VS
+            { // params ‐> default_params
+
+            }
+            fragment_program_ref Ejercicio1FS
+            { // params ‐> default_params
+
+            }
+            texture_unit texture0 
+            {
+                texture lightMap.jpg 2d
+                tex_address_mode clamp 
+                filtering bilinear 
+            }
+            texture_unit texture1 
+            { // * ‐> int 1
+                texture spaceSky.jpg 2d 
+                tex_address_mode wrap 
+            }
+        }
+    }
+}

@@ -71,7 +71,7 @@ void IG2App::setup(void)
 void IG2App::setupScene(void)
 {
 
-	mSM->setSkyPlane(true, Plane(Vector3::UNIT_Z, -20), "space", 1, 1, true, 1.0, 100, 100);
+	mSM->setSkyPlane(true, Plane(Vector3::UNIT_Z, -20), "spaceGLSL", 1, 1, true, 1.0, 100, 100);
 
 	// create the camera
 	Camera* cam = mSM->createCamera("Cam");
