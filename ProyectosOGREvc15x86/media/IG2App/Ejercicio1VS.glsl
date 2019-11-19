@@ -9,7 +9,12 @@ out vec2 vUv1;
 
 void main() {
     vUv0 = uv0;
-    vUv1 = uv0;
-    vUv1.s = vUv0.s - t/20;
+    //zoom
+    vUv0.s += 0.5;
+    vUv0.t += 0.5;
+    vUv0 *= 0.5;
+    //movimiento
+    //vUv1 = uv0;
+    //vUv1.s = vUv0.s - t/20;
     gl_Position = modelViewProjMat * vertex; // obligatorio
 }
