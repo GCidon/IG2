@@ -171,8 +171,8 @@ fragment_program Ejercicio2FS glsl
     {
         param_named textura0 int 0 
         param_named textura1 int 1 
-        param_named InColor float4 0.5 0.5 0.5 0.5
-        param_named OutColor float4 0.58 0.5 0.17 0.2
+        param_named InColor float4 0.2 0.4 1.0 1.0
+        param_named OutColor float4 1.0 0.5 0.1 1.0
         param_named_auto viewPos camera_position
         param_named_auto lightPosition light_position 0
         param_named_auto lightDiffuse light_diffuse_colour 0
@@ -191,7 +191,7 @@ material bomb {
             cull_software none 
 
             diffuse 1.0 1.0 1.0
-            specular 0.8 0.8 0.8 68
+            specular 0.5 0.5 0.5 56
 
             vertex_program_ref Ejercicio2VS
             { // params ‐> default_params
@@ -201,13 +201,14 @@ material bomb {
             { // params ‐> default_params
 
             }
-            texture_unit texture0 {
-                texture BumpyMetal.jpg
+            texture_unit texture1 {
+                texture BumpyMetal.jpg 2d
                 tex_address_mode wrap
             }
-            texture_unit texture1 {
+            texture_unit texture0 {
                 texture corrosion.jpg
                 tex_address_mode wrap
+                filtering bilinear
             }
         }
     }

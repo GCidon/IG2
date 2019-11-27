@@ -1,19 +1,18 @@
 #version 330 core
 
 in vec4 vertex; // atributos de los vértices a procesar
-in vec3 normal;
 in vec2 uv0;
+in vec3 normal;
+
+out vec2 vUv0; // out del vertex shader
 
 out vec3 vWvertex; // en world space
 out vec3 vWnormal;
-
-out vec2 vUv0; // out del vertex shader
 
 uniform mat4 model; // constante de programa
 uniform mat4 view;
 uniform mat4 proj;
 uniform mat4 normalMat;
-//uniform mat4 projection;
 
 
 void main() {
