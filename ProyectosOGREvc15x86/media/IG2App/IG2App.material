@@ -321,6 +321,7 @@ fragment_program InterferencePS glsl {
     source InterferencePS.glsl
     default_params {
         param_named RTT0 int 0
+        param_named riesgo int 1
     }
 }
 
@@ -337,6 +338,44 @@ material InterferencePS {
             }
             texture_unit RTT0 {
                 filtering none
+            }
+            texture_unit riesgo {
+                texture riesgoBiologico.png
+            }
+        }
+    }
+}
+
+vertex_program MandelbrotVS glsl 
+{
+    source MandelbrotVS.glsl
+    default_params {
+        param_named_auto modelViewProjMat worldviewproj_matrix
+    }
+}
+
+fragment_program MandelbrotFS glsl
+{
+    source MandelbrotFS.glsl
+    default_params {
+        param_named InColor float4 0.5 0.5 1.0 1.0
+        param_named OutColor1 float4 0.85 0.03 0.03 1.0
+        param_named OutColor2 float4 0.87 0.95 0.35 1.0
+        param_named space int 0
+    }
+}
+
+material spaceMandelbrot {
+    technique {
+        pass{
+            vertex_program_ref MandelbrotVS {
+
+            }
+            fragment_program_ref MandelbrotFS {
+
+            }
+            texture_unit space {
+                texture spaceSky.jpg
             }
         }
     }

@@ -36,6 +36,8 @@ protected:
   int incrX = 0;
 
   virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);  // InputListener
+
+  Ogre::Viewport* vp;
       
   Ogre::SceneManager* mSM = nullptr;
   OgreBites::TrayManager* mTrayMgr = nullptr;    
@@ -64,6 +66,7 @@ protected:
   Ogre::SceneNode* bombNode = nullptr;
   Bomb* bomb;
 
+  bool interf = false;
  
 };
 

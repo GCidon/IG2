@@ -15,11 +15,9 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 	{
 		getRoot()->queueEndRendering();
 	}
-	else if (evt.keysym.sym == SDLK_w) {
-
-		//rotatecabeza();
-		//rotateroll("clockNode");
-		//rotateposition("clockNode");
+	else if (evt.keysym.sym == SDLK_i) {
+		interf = !interf;
+		CompositorManager::getSingleton().setCompositorEnabled(vp, "Interference", interf);
 	}
 	else if (evt.keysym.sym == SDLK_q) {
 		//avance();
@@ -71,7 +69,7 @@ void IG2App::setup(void)
 void IG2App::setupScene(void)
 {
 
-	mSM->setSkyPlane(true, Plane(Vector3::UNIT_Z, -20), "spaceGLSL", 1, 1, true, 1.0, 100, 100);
+	mSM->setSkyPlane(true, Plane(Vector3::UNIT_Z, -20), "spaceMandelbrot", 1, 1, true, 1.0, 100, 100);
 
 	// create the camera
 	Camera* cam = mSM->createCamera("Cam");
@@ -96,9 +94,9 @@ void IG2App::setupScene(void)
 
 
 	// and tell it to render into the main window
-	Viewport* vp = getRenderWindow()->addViewport(cam);
+	vp = getRenderWindow()->addViewport(cam);
 	CompositorManager::getSingleton().addCompositor(vp, "Interference");
-	CompositorManager::getSingleton().setCompositorEnabled(vp, "Interference", true);
+	CompositorManager::getSingleton().setCompositorEnabled(vp, "Interference", interf);
 	//vp->setBackgroundColour(Ogre::ColourValue(1, 1, 1));
 
 	//------------------------------------------------------------------------
